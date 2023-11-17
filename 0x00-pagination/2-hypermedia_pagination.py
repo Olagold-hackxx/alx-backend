@@ -30,6 +30,7 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Simple pagination"""
         assert (type(page) == int and page > 0)
         assert (type(page_size) == int and page_size > 0)
         index = index_range(page, page_size)
@@ -37,6 +38,7 @@ class Server:
         return dataset[index[0]: index[1]]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """Hypermedia pagination"""
         data = self.get_page(page, page_size)
         total_pages = (len(self.__dataset) + 1 )// page_size
         prev_page = page - 1
@@ -45,7 +47,7 @@ class Server:
         next_page = page + 1
         if page >= total_pages:
             next_page = None
-        details = {
+        page_data = {
             "page_size": page_size,
             "page": page,
             "data": data,
@@ -54,4 +56,4 @@ class Server:
             "total_pages": total_pages
         }
 
-        return details
+        return page_data
