@@ -35,8 +35,8 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Simple pagination"""
-        assert(type(page) == int and page > 0)
-        assert(type(page_size) == int and page_size > 0)
+        assert (type(page) == int and page > 0)
+        assert (type(page_size) == int and page_size > 0)
         index = index_range(page, page_size)
         dataset = self.dataset()
         return dataset[index[0]: index[1]]
