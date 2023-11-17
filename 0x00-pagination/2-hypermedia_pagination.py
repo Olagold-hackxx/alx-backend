@@ -8,7 +8,7 @@ Hypermedia pagination
 
 
 def index_range(page: int, page_size: int) -> tuple:
-    """ Get index"""
+    """ Get index range"""
     start_index = (page_size * page) - page_size
     end_index = page_size * page
     return start_index, end_index
