@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
 import csv
 import math
 from typing import List, Dict
+"""
+Hypermedia pagination
+"""
 
 
 def index_range(page: int, page_size: int) -> tuple:
