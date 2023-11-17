@@ -3,6 +3,7 @@
 Pagination
 """
 
+
 def index_range(page: int, page_size: int) -> tuple:
     """ Get index"""
     start_index = (page_size * page) - page_size
