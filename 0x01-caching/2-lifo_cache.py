@@ -2,6 +2,7 @@
 """LIFO cache dictionary"""
 from base_caching import BaseCaching
 
+
 class LIFOCache(BaseCaching):
     """ LIFO cache"""
     def __init__(self):
@@ -11,7 +12,7 @@ class LIFOCache(BaseCaching):
 
     def put(self, key, item):
         """ Store to cache"""
-        if key is not None or item is not None:
+        if key is not None and item is not None:
             if len(self.cache_data) >= self.MAX_ITEMS:
                 discarded_key = self.insertion_order[len(self.insertion_order) - 1]
                 del self.cache_data[discarded_key]

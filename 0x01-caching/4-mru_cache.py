@@ -13,7 +13,7 @@ class MRUCache(BaseCaching):
 
     def put(self, key, item):
         """ Store to cache"""
-        if key is not None or item is not None:
+        if key is not None and item is not None:
             if len(self.cache_data) >= self.MAX_ITEMS:
                 # Get least used key
                 MRU_key, _ = self.recently_used.popitem(last=True)
