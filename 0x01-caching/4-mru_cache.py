@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """MRU cache dictionary"""
-from base_cache import BaseCaching
+from base_caching import BaseCaching
 from collections import OrderedDict
 
 

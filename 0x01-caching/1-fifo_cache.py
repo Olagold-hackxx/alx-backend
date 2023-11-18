@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """FIFO cache dictionary"""
-from base_cache import BaseCaching
+from base_caching import BaseCaching
 
 class FIFOCache(BaseCaching):
     """ FIFO cache"""
