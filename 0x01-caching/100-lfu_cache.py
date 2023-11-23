@@ -35,6 +35,7 @@ class LFUCache(BaseCaching):
         self.frequency[key] += 1
 
     def get(self, key):
+        """ Get from cache"""
         if key is None or key not in self.cache_data:
             return None
 
