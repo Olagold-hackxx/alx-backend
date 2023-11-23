@@ -1,13 +1,17 @@
+"""LFU CACHING"""
 from base_caching import BaseCaching
 from collections import defaultdict
 
 class LFUCache(BaseCaching):
+    """ LFU cache"""
     def __init__(self):
+        """Initiate class"""
         super().__init__()
         self.frequency = defaultdict(int)
         self.recently_used = {}
 
     def put(self, key, item):
+        """ Store to cache"""
         if key is None or item is None:
             return
 
