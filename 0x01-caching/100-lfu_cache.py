@@ -2,6 +2,7 @@
 from base_caching import BaseCaching
 from collections import defaultdict
 
+
 class LFUCache(BaseCaching):
     """ LFU cache"""
     def __init__(self):
@@ -19,7 +20,8 @@ class LFUCache(BaseCaching):
             min_freq = min(self.frequency.values())
             lfu_key = [k for k, v in self.frequency.items() if v == min_freq]
             if len(lfu_key) > 1:
-                lru_key = min(lfu_key, key=lambda k: self.recently_used.get(k, 0))
+                lru_key = min(lfu_key,
+                              key=lambda k: self.recently_used.get(k, 0))
                 del self.cache_data[lru_key]
                 del self.frequency[lru_key]
                 del self.recently_used[lru_key]
