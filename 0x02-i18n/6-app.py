@@ -42,22 +42,20 @@ def before_request():
 def get_locale():
     """Get the locale"""
 
-    # Check if user is logged in
-    if g.user:
-        # Get locale from parameters
-        url_locale = request.args.get('locale')
-        if url_locale and url_locale in app.config['LANGUAGES']:
-            return url_locale
-        # Get locale from user settings if available
-        elif g.user['locale'] and g.user['locale'] in app.config['LANGUAGES']:
-            return g.user['locale']
-        # Get locale from request header
-        elif request.headers.get('Accept-Language'):
-            header_locale = request.headers.get('Accept-Language')
-            # Split the Accept-Language header to get the preferred locale
-            preferred_locale = header_locale.split(',')[0]
-            if preferred_locale in app.config['LANGUAGES']:
-               return preferred_locale
+    # Get locale from parameters
+    url_locale = request.args.get('locale')
+    if url_locale and url_locale in app.config['LANGUAGES']:
+        return url_locale
+    # Get locale from user settings if available
+    if g.user and g.user['locale'] in app.config['LANGUAGES']:
+        return g.user['locale']
+    # Get locale from request header
+    if request.headers.get('Accept-Language'):
+        header_locale = request.headers.get('Accept-Language')
+        # Split the Accept-Language header to get the preferred locale
+        preferred_locale = header_locale.split(',')[0]
+        if preferred_locale in app.config['LANGUAGES']:
+            return preferred_locale
 
     # Return default locale if no match found
     return app.config['BABEL_DEFAULT_LOCALE']
