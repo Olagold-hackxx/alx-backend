@@ -35,6 +35,7 @@ def before_request():
     """Get query params before resolving each request"""
     user_id = request.args.get('login_as')
     user = get_user(int(user_id)) if user_id else None
+    g.user = user
 
 
 @babel.localeselector
