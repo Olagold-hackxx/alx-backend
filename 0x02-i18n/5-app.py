@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Flask babel"""
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 app = Flask(__name__)
@@ -32,9 +32,9 @@ def get_user(user_id):
 
 @app.before_request
 def before_request():
-    """Get query params"""
+    """Get query params before resolving each request"""
     user_id = request.args.get('login_as')
-    g.user = get_user(int(user_id)) if user_id else None
+    user = get_user(int(user_id)) if user_id else None
 
 
 @babel.localeselector
