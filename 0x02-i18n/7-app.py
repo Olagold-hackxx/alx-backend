@@ -2,6 +2,7 @@
 """Flask babel"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+import pytz
 
 app = Flask(__name__)
 
@@ -32,10 +33,59 @@ def get_user(user_id):
 
 @app.before_request
 def before_request():
-    """Get query params"""
+    """Get query params before resolving each request"""
     user_id = request.args.get('login_as')
     user = get_user(int(user_id)) if user_id else None
     g.user = user
+
+
+@babel.localeselector
+def get_locale():
+    """Get the locale"""
+    requested_locale = request.args.get('locale')
+
+    # If the requested locale is supported, return it
+    if requested_locale and requested_locale in app.config['LANGUAGES']:
+        return requested_locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@app.route('/')
+def home():
+    """Home page
+    """
+    return render_template('5-index.html')
+
+
+
+@babel.timezoneselector
+def get_timezone():
+    # Get timezone from URL parameters
+    url_timezone = request.args.get('timezone')
+
+    # Check if user is logged in
+    user_id = request.args.get('login_as')
+    if user_id:
+        user = get_user(int(user_id))
+        if user and user['timezone']:
+            try:
+                pytz.timezone(user['timezone'])
+                return user['timezone']
+            except pytz.UnknownTimeZoneError:
+                pass
+
+    # Get timezone from user settings if available
+    if 'login_as' in request.args:
+        user = get_user(int(request.args.get('login_as')))
+        if user and user['timezone']:
+            try:
+                pytz.timezone(user['timezone'])
+                return user['timezone']
+            except pytz.UnknownTimeZoneError:
+                pass
+
+    # If no valid timezone found, default to UTC
+    return 'UTC'
 
 
 @babel.localeselector
@@ -61,13 +111,6 @@ def get_locale():
 
     # Return default locale if no match found
     return app.config['BABEL_DEFAULT_LOCALE']
-
-
-@app.route('/')
-def home():
-    """Home page
-    """
-    return render_template('6-index.html')
 
 
 if __name__ == '__main__':
