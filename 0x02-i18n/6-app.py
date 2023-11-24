@@ -46,10 +46,10 @@ def get_locale():
     if g.user:
         # Get locale from parameters
         url_locale = request.args.get('locale')
-        if url_locale:
+        if url_locale and url_locale in app.config['LANGUAGES']:
             return url_locale
         # Get locale from user settings if available
-        elif g.user['locale']:
+        elif g.user['locale'] and g.user['locale'] in app.config['LANGUAGES']:
             return g.user['locale']
         # Get locale from request header
         elif request.headers.get('Accept-Language'):
