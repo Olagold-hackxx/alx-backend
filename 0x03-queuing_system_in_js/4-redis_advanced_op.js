@@ -1,7 +1,7 @@
 import { createClient, print } from 'redis';
 import { promisify } from "util";
 
-const client = promisify(createClient())
+const client = createClient()
 client
     .on('error', err => console.log('Redis client not connected to the server:', err))
     .on('connect', () => console.log('Redis client connected to the server'));
@@ -16,6 +16,6 @@ const values = {
 	  Paris: 2,
 };
 for (const [key, val] of Object.entries(values)) {
-	  client.hset(name, key, val, (err, reply) => redis.print(`Reply: ${reply}`));
+    client.hset(name, key, val, (err, reply) => print(`Reply: ${reply}`));
 }
 client.hgetall(name, (err, data) => console.log(data));
